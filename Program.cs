@@ -16,11 +16,12 @@ builder.Services.AddControllers();
 // Konfigurasi CORS
 builder.Services.AddCors(options =>
 {
-    options.AddPolicy("AllowAll", builder =>
+    options.AddPolicy("AllowCredentials", builder =>
     {
         builder
-            .AllowAnyOrigin() // Untuk testing dengan Postman
+            .WithOrigins("http://127.0.0.1:5500") // Ganti dengan domain frontend Anda
             .AllowAnyMethod()
+            .AllowCredentials()
             .AllowAnyHeader();
     });
 });
@@ -57,7 +58,19 @@ if (app.Environment.IsDevelopment())
 }
 
 // Gunakan CORS sebelum routing
-app.UseCors("AllowAll");
+// app.UseCors("AllowAll");
+app.UseCors("AllowCredentials");
+app.UseStaticFiles();
+app.MapGet("/dashboard", [Authorize] async (HttpContext context) => 
+{
+    await context.Response.SendFileAsync("wwwroot/dashboard.html");
+});
+app.MapGet("/login", [Authorize] async (HttpContext context) => 
+{
+    await context.Response.SendFileAsync("wwwroot/index.html");
+});
+
+
 
 
 // Tambahkan Authentication middleware sebelum Authorization

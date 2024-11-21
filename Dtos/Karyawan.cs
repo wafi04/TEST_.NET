@@ -66,15 +66,11 @@ namespace CrudApi.Dtos
         public string Alamat { get; set; } = string.Empty;
         public string Negara { get; set; } = string.Empty;
         public JenisKelamin JenisKelamin { get; set; }
+
+        public List<UserDetailDto>   user  {get;set;}  = new List<UserDetailDto>();
     }
 
-    public class UserDetailDto
-    {
-        public int Id { get; set; }
-        public string Name { get; set; } = string.Empty;
-        public string Email { get; set; } = string.Empty;
-        public List<KaryawanDetailDto> Karyawan { get; set; } = new List<KaryawanDetailDto>();
-    }
+   
 
     public class KaryawanDetailDto
     {

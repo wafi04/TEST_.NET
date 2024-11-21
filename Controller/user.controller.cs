@@ -66,40 +66,40 @@ public class UsersController : ControllerBase
 
     // Authentication Endpoints
     [HttpPost("login")]
-public async Task<ActionResult<ApiResponse<object>>> Login(LoginRequest request)
-{
-    var user = await _userService.GetUserByEmailAsync(request.Email);
-    if (user == null)
+    public async Task<ActionResult<ApiResponse<object>>> Login(LoginRequest request)
     {
-        return BadRequest(ApiResponse<object>.Fail("Invalid email or password"));
-    }
-
-    // Verify password
-    if (!_userService.VerifyPassword(user, request.Password))
-    {
-        return BadRequest(ApiResponse<object>.Fail("Invalid email or password"));
-    }
-
-    // Generate tokens
-    var accessToken = _authService.GenerateToken(user);
-    var refreshToken = _authService.GenerateRefreshToken();
-
-    // Set cookies
-    SetTokenCookie(accessToken, "accessToken", 1 * 24 *60);
-    SetTokenCookie(refreshToken, "refreshToken", 7 * 24 * 60); // 7 days
-
-    return Ok(ApiResponse<object>.Ok(new
-    {
-        user = new
+        var user = await _userService.GetUserByEmailAsync(request.Email);
+        if (user == null)
         {
-            user.Id,
-            user.Name,
-            user.Email
-        },
-        accessToken = accessToken,  // Include token in response for testing
-        refreshToken = refreshToken // Include refresh token in response for testing
-    }, "Login successful"));
-}
+            return BadRequest(ApiResponse<object>.Fail("Invalid email or password"));
+        }
+
+        // Verify password
+        if (!_userService.VerifyPassword(user, request.Password))
+        {
+            return BadRequest(ApiResponse<object>.Fail("Invalid email or password"));
+        }
+
+        // Generate tokens
+        var accessToken = _authService.GenerateToken(user);
+        var refreshToken = _authService.GenerateRefreshToken();
+
+        // Set cookies
+        SetTokenCookie(accessToken, "accessToken", 1 * 24 *60);
+        SetTokenCookie(refreshToken, "refreshToken", 7 * 24 * 60); // 7 days
+
+        return Ok(ApiResponse<object>.Ok(new
+        {
+            user = new
+            {
+                user.Id,
+                user.Name,
+                user.Email
+            },
+            accessToken = accessToken,  // Include token in response for testing
+            refreshToken = refreshToken // Include refresh token in response for testing
+        }, "Login successful"));
+    }
 
     [HttpPost("refresh")]
     public async Task<ActionResult<ApiResponse<object>>> RefreshToken()

@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Login & Register</title>
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css"
+      rel="stylesheet" />
+    <style>
+      body {
+        background: linear-gradient(120deg, #4e54c8, #8f94fb);
+        height: 100vh;
+      }
+      .card {
+        border: none;
+        border-radius: 15px;
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+      }
+      .form-control {
+        border-radius: 10px;
+        padding: 12px;
+      }
+      .btn-primary {
+        border-radius: 10px;
+        padding: 12px;
+        background: linear-gradient(120deg, #4e54c8, #8f94fb);
+        border: none;
+      }
+      .btn-primary:hover {
+        background: linear-gradient(120deg, #3a3f99, #7a7fd6);
+      }
+      .nav-pills .nav-link {
+        border-radius: 10px;
+        color: #4e54c8;
+      }
+      .nav-pills .nav-link.active {
+        background: linear-gradient(120deg, #4e54c8, #8f94fb);
+      }
+      .form-label {
+        color: #4e54c8;
+        font-weight: 500;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="row justify-content-center align-items-center min-vh-100">
+        <div class="col-md-6 col-lg-5">
+          <div class="card p-4">
+            <!-- Tab Navigation -->
+            <ul
+              class="nav nav-pills mb-4 justify-content-center"
+              id="pills-tab"
+              role="tablist">
+              <li class="nav-item" role="presentation">
+                <button
+                  class="nav-link active"
+                  id="pills-login-tab"
+                  data-bs-toggle="pill"
+                  data-bs-target="#pills-login"
+                  type="button">
+                  Login
+                </button>
+              </li>
+              <li class="nav-item" role="presentation">
+                <button
+                  class="nav-link"
+                  id="pills-register-tab"
+                  data-bs-toggle="pill"
+                  data-bs-target="#pills-register"
+                  type="button">
+                  Register
+                </button>
+              </li>
+            </ul>
+
+            <!-- Tab Content -->
+            <div class="tab-content" id="pills-tabContent">
+              <!-- Login Form -->
+              <div class="tab-pane fade show active" id="pills-login">
+                <form id="loginForm">
+                  <div class="mb-3">
+                    <label class="form-label">Email</label>
+                    <input type="email" class="form-control" required />
+                  </div>
+                  <div class="mb-3">
+                    <label class="form-label">Password</label>
+                    <input type="password" class="form-control" required />
+                  </div>
+                  <div class="mb-3 form-check">
+                    <input
+                      type="checkbox"
+                      class="form-check-input"
+                      id="rememberMe" />
+                    <label class="form-check-label" for="rememberMe"
+                      >Ingat saya</label
+                    >
+                  </div>
+                  <!-- Loading spinner -->
+                  <div
+                    id="loginSpinner"
+                    class="spinner-border text-primary d-none"
+                    role="status">
+                    <span class="visually-hidden">Loading...</span>
+                  </div>
+                  <!-- Alert untuk pesan error/sukses -->
+                  <div id="loginAlert" class="alert d-none" role="alert"></div>
+                  <button
+                    type="submit"
+                    class="btn btn-primary w-100"
+                    id="loginButton">
+                    Login
+                  </button>
+                </form>
+              </div>
+
+              <!-- Register Form -->
+              <div class="tab-pane fade" id="pills-register">
+                <form id="registerForm">
+                  <div class="mb-3">
+                    <label class="form-label">Nama Lengkap</label>
+                    <input type="text" class="form-control" required />
+                  </div>
+                  <div class="mb-3">
+                    <label class="form-label">Email</label>
+                    <input type="email" class="form-control" required />
+                  </div>
+                  <div class="mb-3">
+                    <label class="form-label">Password</label>
+                    <input type="password" class="form-control" required />
+                  </div>
+                  <div class="mb-3">
+                    <label class="form-label">Konfirmasi Password</label>
+                    <input type="password" class="form-control" required />
+                  </div>
+                  <button type="submit" class="btn btn-primary w-100">
+                    Register
+                  </button>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+    <script>
+      $(document).ready(function () {
+        const api = "/api/users/login";
+
+        // Login Form Submission
+        $("#loginForm").on("submit", function (e) {
+          e.preventDefault();
+
+          // Ambil nilai dari form
+          const email = $("#loginEmail").val();
+          const password = $("#loginPassword").val();
+
+          // Tampilkan loading spinner
+          $("#loginSpinner").removeClass("d-none");
+          $("#loginButton").prop("disabled", true);
+          $("#loginAlert").addClass("d-none");
+
+          // Data yang akan dikirim ke API
+          const data = {
+            email: "john@gmail.com",
+            password: "password123",
+          };
+
+          // Kirim request ke API menggunakan jQuery Ajax
+          $.ajax({
+            url: api,
+            type: "POST",
+            xhrFields: {
+              withCredentials: true, // Ini penting untuk menerima cookies
+            },
+            crossDomain: true, // Ini diperlukan jika API di domain berbeda
+            contentType: "application/json",
+            data: JSON.stringify(data),
+            success: function (response) {
+              console.log(response);
+              console.log(data);
+              // Handle success response
+              $("#loginAlert")
+                .removeClass("d-none alert-danger")
+                .addClass("alert-success")
+                .text("Login berhasil!");
+
+              window.location.href = "/dashboard";
+            },
+            error: function (xhr, status, error) {
+              // Handle error response
+              let errorMessage = "Terjadi kesalahan saat login";
+
+              // Coba parse error message dari response
+              try {
+                const response = JSON.parse(xhr.responseText);
+                errorMessage = response.message || errorMessage;
+              } catch (e) {
+                console.error("Error parsing error response:", e);
+              }
+
+              $("#loginAlert")
+                .removeClass("d-none alert-success")
+                .addClass("alert-danger")
+                .text(errorMessage);
+            },
+            complete: function () {
+              // Sembunyikan loading spinner
+              $("#loginSpinner").addClass("d-none");
+              $("#loginButton").prop("disabled", false);
+            },
+          });
+        });
+
+        // Clear alert when input changes
+        $("#loginEmail, #loginPassword").on("input", function () {
+          $("#loginAlert").addClass("d-none");
+        });
+      });
+    </script>
+  </body>
+</html>
+
+<!-- $("#registerForm").on("submit", function (e) {
+          e.preventDefault();
+          // Add your registration logic here
+          alert("Register form submitted!");
+        });
+
+        // Password validation on register
+        $('#registerForm input[type="password"]').on("keyup", function () {
+          let password = $('#registerForm input[type="password"]').eq(0).val();
+          let confirm = $('#registerForm input[type="password"]').eq(1).val();
+
+          if (password !== confirm) {
+            $('#registerForm input[type="password"]')
+              .eq(1)
+              .addClass("is-invalid");
+          } else {
+            $('#registerForm input[type="password"]')
+              .eq(1)
+              .removeClass("is-invalid");
+          }
+        }); -->

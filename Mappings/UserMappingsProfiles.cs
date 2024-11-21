@@ -1,8 +1,8 @@
 // File: Mappings/UserMappingProfile.cs
 using AutoMapper;
 using CrudApi.Models;
-using CrudApi.Dtos.User; // Pastikan Anda punya folder Dtos
-using CrudApi.Dtos.Karyawan;
+using  CrudApi.Dtos;
+// using CrudApi.Dtos; // Pastikan Anda punya folder Dtos
 namespace CrudApi.Mappings
 {
     public class UserMappingProfile : Profile
@@ -17,15 +17,21 @@ namespace CrudApi.Mappings
 
             CreateMap<User, UserDetailDto>()
                 .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.Id))
-                .ForMember(dest => dest.Username, opt => opt.MapFrom(src => src.Name))
-                .ForMember(dest => dest.Email, opt => opt.MapFrom(src => src.Email))
-                .ForMember(dest => dest.CreatedAt, opt => opt.MapFrom(src => src.CreatedAt));
+                .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.Name))
+                .ForMember(dest => dest.Email, opt => opt.MapFrom(src => src.Email));
+
 
             // Mapping dari CreateUserDto ke User
             CreateMap<CreateUserDto, User>()
                 .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.Username))
                 .ForMember(dest => dest.Email, opt => opt.MapFrom(src => src.Email))
                 .ForMember(dest => dest.PasswordHash, opt => opt.Ignore()); // Password hash akan dihandle di service
+            CreateMap<Karyawan, KaryawanDto>()
+            .ForMember(dest => dest.user, opt => opt.MapFrom(src => new List<UserDetailDto>())); // Adjust as needed
+
+        // Create a map from User to UserDetailDto
+        CreateMap<User, UserDetailDto>()
+            .ForMember(dest => dest.Karyawan, opt => opt.MapFrom(src => new List<KaryawanDto>())); // Adjust as needed
         }
     }
 
@@ -46,10 +52,16 @@ namespace CrudApi.Mappings
                 .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.Name))
                 .ForMember(dest => dest.JenisKelamin, opt => opt.MapFrom(src => src.JenisKelamin));
 
-            CreateMap<CreateKaryawanDto, Karyawan>()
+            CreateMap<KaryawanCreateDto, Karyawan>()
                 .ForMember(dest => dest.Nik, opt => opt.MapFrom(src => src.Nik))
                 .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.Name))
                 .ForMember(dest => dest.JenisKelamin, opt => opt.MapFrom(src => src.JenisKelamin));
-        }
+            CreateMap<Karyawan, KaryawanDto>()
+            .ForMember(dest => dest.user, opt => opt.MapFrom(src => new List<UserDetailDto>())); // Adjust as needed
+
+            CreateMap<User, UserDetailDto>()
+                .ForMember(dest => dest.Karyawan, opt => opt.MapFrom(src => new List<KaryawanDto>())); // Adjust as needed
+            }
+
     }
 }

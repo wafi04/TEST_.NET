@@ -1,5 +1,6 @@
 using CrudApi.Models;
 using CrudApi.Data;
+using  CrudApi.Dtos;
 using Microsoft.EntityFrameworkCore;
 
 
@@ -7,17 +8,26 @@ namespace CrudApi.Services;
 
 public interface IKaryawanService
 {
+    Task<IEnumerable<Karyawan>> GetKaryawanByUserIdAsync(int userId);
     Task<IEnumerable<Karyawan>> GetAllKaryawanAsync();  // Nama method di interface
     Task<Karyawan?> GetKaryawanByNikAsync(string nik);
     Task<Karyawan> CreateKaryawanAsync(Karyawan karyawan);
-    Task<Karyawan?> UpdateKaryawanAsync(string nik, Karyawan karyawan);
+    Task<Karyawan?> UpdateKaryawanAsync(string nik, KaryawanUpdateDto karyawan);
     Task<bool> DeleteKaryawanAsync(string nik);
 }
+
+
 
 public class KaryawanService : IKaryawanService
 {
     private readonly ApplicationDbContext _context;
 
+public async Task<IEnumerable<Karyawan>> GetKaryawanByUserIdAsync(int userId)
+{
+    return await _context.Karyawan
+        .Where(k => k.UserId == userId)
+        .ToListAsync();
+}
     public KaryawanService(ApplicationDbContext context)
     {
         _context = context ?? throw new ArgumentNullException(nameof(context));
@@ -59,7 +69,7 @@ public class KaryawanService : IKaryawanService
         return karyawan;
     }
 
-    public async Task<Karyawan?> UpdateKaryawanAsync(string nik, Karyawan karyawan)
+    public async Task<Karyawan?> UpdateKaryawanAsync(string nik, KaryawanUpdateDto karyawan)
     {
         var existingKaryawan = await _context.Karyawan
             .FirstOrDefaultAsync(k => k.Nik == nik);
@@ -79,6 +89,7 @@ public class KaryawanService : IKaryawanService
         await _context.SaveChangesAsync();
         return existingKaryawan;
     }
+
 
     public async Task<bool> DeleteKaryawanAsync(string nik)
     {

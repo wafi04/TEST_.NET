@@ -1,11 +1,58 @@
 {
   "Version": 1,
-  "Hash": "k2Xh3oVE2Qun2CnOdz7oOB/1M+eEaWHps3rBfbkE1Io=",
+  "Hash": "E1AdI6lfe4wr0Ke3U7o+pBvncyIiyZonwNbIdv74vpg=",
   "Source": "CrudApi",
   "BasePath": "_content/CrudApi",
   "Mode": "Default",
   "ManifestType": "Build",
   "ReferencedProjectsConfiguration": [],
-  "DiscoveryPatterns": [],
-  "Assets": []
+  "DiscoveryPatterns": [
+    {
+      "Name": "CrudApi/wwwroot",
+      "Source": "CrudApi",
+      "ContentRoot": "/home/wafiuddin/Documents/testing/CrudApi/wwwroot/",
+      "BasePath": "_content/CrudApi",
+      "Pattern": "**"
+    }
+  ],
+  "Assets": [
+    {
+      "Identity": "/home/wafiuddin/Documents/testing/CrudApi/wwwroot/dashboard.html",
+      "SourceId": "CrudApi",
+      "SourceType": "Discovered",
+      "ContentRoot": "/home/wafiuddin/Documents/testing/CrudApi/wwwroot/",
+      "BasePath": "_content/CrudApi",
+      "RelativePath": "dashboard.html",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "PreferTarget",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot/dashboard.html"
+    },
+    {
+      "Identity": "/home/wafiuddin/Documents/testing/CrudApi/wwwroot/index.html",
+      "SourceId": "CrudApi",
+      "SourceType": "Discovered",
+      "ContentRoot": "/home/wafiuddin/Documents/testing/CrudApi/wwwroot/",
+      "BasePath": "_content/CrudApi",
+      "RelativePath": "index.html",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "PreferTarget",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot/index.html"
+    }
+  ]
 }

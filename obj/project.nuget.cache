@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "Ox1fXB7uM+RVAIZvVm6itHQLZYWqxdRe6skZDoDfPKlxeOW2vPFmi1oeOFzpxjdXGLpUBdcZlfZlqS8SEx0ufA==",
+  "dgSpecHash": "8DmSFSgJNii8H9uFztimGUPzOxX3i30y52svRqK8PlYtTzIZN0O1nPWwNSri1CLPA9PBJavE4JeIyt0BkJdFUA==",
   "success": true,
-  "projectFilePath": "/home/wafiuddin/Documents/CrudApi/CrudApi.csproj",
+  "projectFilePath": "/home/wafiuddin/Documents/testing/CrudApi/CrudApi.csproj",
   "expectedPackageFiles": [
     "/home/wafiuddin/.nuget/packages/automapper/13.0.1/automapper.13.0.1.nupkg.sha512",
     "/home/wafiuddin/.nuget/packages/humanizer.core/2.14.1/humanizer.core.2.14.1.nupkg.sha512",

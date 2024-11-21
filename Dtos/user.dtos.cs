@@ -1,5 +1,5 @@
 // File: Dtos/User/UserResponseDto.cs
-namespace CrudApi.Dtos.User
+namespace CrudApi.Dtos
 {
     public class UserResponseDto
     {
@@ -8,12 +8,12 @@ namespace CrudApi.Dtos.User
         public string? Email { get; set; }
     }
 
-    public class UserDetailDto
+     public class UserDetailDto
     {
         public int Id { get; set; }
-        public string? Username { get; set; }
-        public string? Email { get; set; }
-        public DateTime CreatedAt { get; set; }
+        public string Name { get; set; } = string.Empty;
+        public string Email { get; set; } = string.Empty;
+        public List<KaryawanDetailDto> Karyawan { get; set; } = new List<KaryawanDetailDto>();
     }
 
     public class CreateUserDto

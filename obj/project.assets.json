@@ -3726,11 +3726,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "/home/wafiuddin/Documents/CrudApi/CrudApi.csproj",
+      "projectUniqueName": "/home/wafiuddin/Documents/testing/CrudApi/CrudApi.csproj",
       "projectName": "CrudApi",
-      "projectPath": "/home/wafiuddin/Documents/CrudApi/CrudApi.csproj",
+      "projectPath": "/home/wafiuddin/Documents/testing/CrudApi/CrudApi.csproj",
       "packagesPath": "/home/wafiuddin/.nuget/packages/",
-      "outputPath": "/home/wafiuddin/Documents/CrudApi/obj/",
+      "outputPath": "/home/wafiuddin/Documents/testing/CrudApi/obj/",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "/home/wafiuddin/.nuget/NuGet/NuGet.Config"
