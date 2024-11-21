@@ -14,6 +14,11 @@ public interface IKaryawanService
     Task<Karyawan> CreateKaryawanAsync(Karyawan karyawan);
     Task<Karyawan?> UpdateKaryawanAsync(string nik, KaryawanUpdateDto karyawan);
     Task<bool> DeleteKaryawanAsync(string nik);
+
+    // search
+     Task<List<Karyawan>> SearchKaryawanByNikAsync(string nik);
+    Task<List<Karyawan>> SearchKaryawanByNameAsync(string name);
+    Task<List<Karyawan>> SearchKaryawanAsync(string searchTerm);
 }
 
 
@@ -44,7 +49,6 @@ public async Task<IEnumerable<Karyawan>> GetKaryawanByUserIdAsync(int userId)
    public async Task<Karyawan?> GetKaryawanByNikAsync(string nik)
     {
         return await _context.Karyawan
-            .Include(k => k.User)
             .FirstOrDefaultAsync(k => k.Nik == nik);
     }
 
@@ -105,4 +109,27 @@ public async Task<IEnumerable<Karyawan>> GetKaryawanByUserIdAsync(int userId)
         await _context.SaveChangesAsync();
         return true;
     }
+
+    public async Task<List<Karyawan>> SearchKaryawanByNikAsync(string nik)
+    {
+        return await _context.Karyawan
+            .Where(k => k.Nik.Contains(nik))
+            .ToListAsync();
+    }
+
+    public async Task<List<Karyawan>> SearchKaryawanByNameAsync(string name)
+    {
+        return await _context.Karyawan
+            .Where(k => k.Name.Contains(name))
+            .ToListAsync();
+    }
+
+    public async Task<List<Karyawan>> SearchKaryawanAsync(string searchTerm)
+    {
+        return await _context.Karyawan
+            .Where(k => 
+                k.Nik.Contains(searchTerm) || 
+                k.Name.Contains(searchTerm))
+            .ToListAsync();
+    }   
 }

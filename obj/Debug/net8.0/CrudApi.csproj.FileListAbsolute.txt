@@ -287,3 +287,4 @@
 /home/wafiuddin/Documents/testing/CrudApi/obj/Debug/net8.0/CrudApi.genruntimeconfig.cache
 /home/wafiuddin/Documents/testing/CrudApi/obj/Debug/net8.0/ref/CrudApi.dll
 /home/wafiuddin/Documents/testing/CrudApi/bin/Debug/net8.0/CrudApi.staticwebassets.runtime.json
+/home/wafiuddin/Documents/testing/CrudApi/obj/Debug/net8.0/CrudApi.sourcelink.json

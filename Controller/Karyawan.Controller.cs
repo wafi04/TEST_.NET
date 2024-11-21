@@ -105,15 +105,11 @@ public async Task<IActionResult> GetKaryawanByNik(string nik)
                 message = $"Karyawan with NIK {nik} not found"
             });
         }
-
-        // Correct mapping using AutoMapper
-        var karyawanDto = _mapper.Map<KaryawanDto>(karyawan);
-
         return Ok(new
         {
             success = true,
             message = "Data retrieved successfully",
-            data = karyawanDto
+            data = karyawan
         });
     }
     catch (Exception ex)
@@ -260,51 +256,45 @@ public async Task<IActionResult> GetKaryawanByNik(string nik)
             });
         }
     }
-//     [HttpGet("{nik}")]
-//     [ProducesResponseType(typeof(KaryawanDto), StatusCodes.Status200OK)]
-//     [ProducesResponseType(StatusCodes.Status404NotFound)]
-//     [ProducesResponseType(StatusCodes.Status400BadRequest)]
-// public async Task<ActionResult<KaryawanDto>> GetKaryawan(string nik)
-// {
-//     try
-//     {
-//         if (string.IsNullOrWhiteSpace(nik))
-//         {
-//             return BadRequest(new
-//             {
-//                 success = false,
-//                 message = "NIK parameter cannot be null or empty"
-//             });
-//         }
+     [HttpGet("search/nik")]
+        public async Task<ActionResult<List<Karyawan>>> SearchKaryawanByNik([FromQuery] string nik)
+        {
+            var karyawans = await _karyawanService.SearchKaryawanByNikAsync(nik);
+            
+            if (!karyawans.Any())
+            {
+                return NotFound($"Tidak ada karyawan dengan NIK mengandung {nik}");
+            }
 
-//         var karyawan = await _karyawanService.GetKaryawanByNikAsync(nik);
-//         if (karyawan == null)
-//         {
-//             return NotFound(new
-//             {
-//                 success = false,
-//                 message = $"Karyawan with NIK {nik} not found"
-//             });
-//         }
+            return Ok(karyawans);
+        }
 
-//         var responseDto = MapToDto(karyawan);
+        // GET: Pencarian karyawan berdasarkan Nama
+        [HttpGet("search/name")]
+        public async Task<ActionResult<List<Karyawan>>> SearchKaryawanByName([FromQuery] string name)
+        {
+            var karyawans = await _karyawanService.SearchKaryawanByNameAsync(name);
+            
+            if (!karyawans.Any())
+            {
+                return NotFound($"Tidak ada karyawan dengan nama mengandung {name}");
+            }
 
-//         return Ok(new
-//         {
-//             success = true,
-//             message = "Data retrieved successfully",
-//             data = responseDto
-//         });
-//     }
-//     catch (Exception ex)
-//     {
-//         _logger.LogError(ex, "Error retrieving karyawan with NIK {Nik}", nik);
-//         return StatusCode(500, new
-//         {
-//             success = false,
-//             message = "Error retrieving data",
-//             error = ex.Message
-//         });
-//     }
-// }
-}
+            return Ok(karyawans);
+        }
+
+        // GET: Pencarian karyawan berdasarkan NIK atau Nama
+        [HttpGet("search")]
+        public async Task<ActionResult<List<Karyawan>>> SearchKaryawan([FromQuery] string searchTerm)
+        {
+            var karyawans = await _karyawanService.SearchKaryawanAsync(searchTerm);
+            
+            if (!karyawans.Any())
+            {
+                return NotFound($"Tidak ada karyawan dengan NIK atau nama mengandung {searchTerm}");
+            }
+
+            return Ok(karyawans);
+        }
+    }
+
