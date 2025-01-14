@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Login & Register</title>
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css"
+      rel="stylesheet" />
+    <style>
+      body {
+        background: linear-gradient(120deg, #4e54c8, #8f94fb);
+        height: 100vh;
+      }
+      .card {
+        border: none;
+        border-radius: 15px;
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+      }
+      .form-control {
+        border-radius: 10px;
+        padding: 12px;
+      }
+      .btn-primary {
+        border-radius: 10px;
+        padding: 12px;
+        background: linear-gradient(120deg, #4e54c8, #8f94fb);
+        border: none;
+      }
+      .btn-primary:hover {
+        background: linear-gradient(120deg, #3a3f99, #7a7fd6);
+      }
+      .nav-pills .nav-link {
+        border-radius: 10px;
+        color: #4e54c8;
+      }
+      .nav-pills .nav-link.active {
+        background: linear-gradient(120deg, #4e54c8, #8f94fb);
+      }
+      .form-label {
+        color: #4e54c8;
+        font-weight: 500;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="row justify-content-center align-items-center min-vh-100">
+        <div class="col-md-6 col-lg-5">
+          <div class="card p-4">
+            <button
+              class="nav-link active"
+              id="pills-login-tab"
+              data-bs-toggle="pill"
+              data-bs-target="#pills-login"
+              type="button">
+              Login
+            </button>
+
+            <div class="tab-pane fade show active" id="pills-login">
+              <form id="loginForm">
+                <div class="mb-3">
+                  <label class="form-label">Email</label>
+                  <input type="email" class="form-control" required />
+                </div>
+                <div class="mb-3">
+                  <label class="form-label">Password</label>
+                  <input type="password" class="form-control" required />
+                </div>
+                <div class="mb-3 form-check">
+                  <input
+                    type="checkbox"
+                    class="form-check-input"
+                    id="rememberMe" />
+                  <label class="form-check-label" for="rememberMe"
+                    >Ingat saya</label
+                  >
+                </div>
+                <div
+                  id="loginSpinner"
+                  class="spinner-border text-primary d-none"
+                  role="status">
+                  <span class="visually-hidden">Loading...</span>
+                </div>
+                <div id="loginAlert" class="alert d-none" role="alert"></div>
+                <button
+                  type="submit"
+                  class="btn btn-primary w-100"
+                  id="loginButton">
+                  Login
+                </button>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+    <script>
+      $(document).ready(function () {
+        const api = "/api/users/login";
+
+        // Validation functions
+        const validateEmail = (email) => {
+          if (!email) return "Email harus diisi";
+          const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+          if (!emailRegex.test(email)) return "Format email tidak valid";
+          return "";
+        };
+
+        const validatePassword = (password) => {
+          if (!password) return "Password harus diisi";
+          return "";
+        };
+
+        // Login Form Submission
+        $("#loginForm").on("submit", function (e) {
+          e.preventDefault();
+
+          // Get form values (perbaikan pengambilan nilai form)
+          const email = $("#loginForm input[type='email']").val().trim();
+          const password = $("#loginForm input[type='password']").val();
+          const rememberMe = $("#rememberMe").prop("checked");
+
+          // Validate fields
+          const emailError = validateEmail(email);
+          const passwordError = validatePassword(password);
+
+          // Check for validation errors
+          if (emailError || passwordError) {
+            const errorMessage = [emailError, passwordError]
+              .filter((error) => error)
+              .join("\n");
+
+            $("#loginAlert")
+              .removeClass("d-none alert-success")
+              .addClass("alert-danger")
+              .html(errorMessage.replace(/\n/g, "<br>"));
+            return;
+          }
+
+          // Show loading spinner
+          $("#loginSpinner").removeClass("d-none");
+          $("#loginButton").prop("disabled", true);
+          $("#loginAlert").addClass("d-none");
+
+          // Data yang akan dikirim ke API
+          const data = {
+            email: email,
+            password: password,
+            rememberMe: rememberMe,
+          };
+
+          // Kirim request ke API menggunakan jQuery Ajax
+          $.ajax({
+            url: api,
+            type: "POST",
+            xhrFields: {
+              withCredentials: true,
+            },
+            crossDomain: true,
+            contentType: "application/json",
+            data: JSON.stringify(data),
+            success: function (response) {
+              // Handle success based on response.success
+              if (response.success) {
+                $("#loginAlert")
+                  .removeClass("d-none alert-danger")
+                  .addClass("alert-success")
+                  .text(response.message || "Login berhasil!");
+
+                // Redirect after success message
+                setTimeout(function () {
+                  window.location.href = "/dashboard";
+                }, 1000);
+              } else {
+                // Handle case where API returns success: false
+                $("#loginAlert")
+                  .removeClass("d-none alert-success")
+                  .addClass("alert-danger")
+                  .text(response.message || "Email atau password salah");
+              }
+            },
+            error: function (xhr, status, error) {
+              let errorMessage = "Terjadi kesalahan saat login";
+
+              try {
+                const response = JSON.parse(xhr.responseText);
+                if (response.errors) {
+                  // Handle validation errors from API
+                  const errors = Array.isArray(response.errors)
+                    ? response.errors.join("<br>")
+                    : Object.values(response.errors).join("<br>");
+                  errorMessage = errors || response.message || errorMessage;
+                } else {
+                  errorMessage = response.message || errorMessage;
+                }
+              } catch (e) {
+                console.error("Error parsing error response:", e);
+              }
+
+              $("#loginAlert")
+                .removeClass("d-none alert-success")
+                .addClass("alert-danger")
+                .html(errorMessage);
+            },
+            complete: function () {
+              // Hide loading spinner
+              $("#loginSpinner").addClass("d-none");
+              $("#loginButton").prop("disabled", false);
+            },
+          });
+        });
+
+        // Real-time validation
+        $(
+          "#loginForm input[type='email'], #loginForm input[type='password']"
+        ).on("input", function () {
+          const $input = $(this);
+          const value = $input.val().trim();
+          let error = "";
+
+          // Determine which validation to run
+          if ($input.attr("type") === "email") {
+            error = validateEmail(value);
+          } else if ($input.attr("type") === "password") {
+            error = validatePassword(value);
+          }
+
+          // Show/hide validation feedback
+          if (error) {
+            $input.addClass("is-invalid");
+            $input.removeClass("is-valid");
+            $input.siblings(".invalid-feedback").remove();
+            $input.after(`<div class="invalid-feedback">${error}</div>`);
+          } else {
+            $input.removeClass("is-invalid");
+            $input.addClass("is-valid");
+            $input.siblings(".invalid-feedback").remove();
+          }
+        });
+
+        // Clear alert when input changes
+        $("#loginForm input").on("input", function () {
+          $("#loginAlert").addClass("d-none");
+        });
+      });
+    </script>
+  </body>
+</html>

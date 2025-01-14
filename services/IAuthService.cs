@@ -40,7 +40,7 @@ public class AuthService : IAuthService
             issuer: _configuration["Jwt:Issuer"],
             audience: _configuration["Jwt:Audience"],
             claims: claims,
-            expires: DateTime.Now.AddMinutes(15), // Token expires in 15 minutes
+            expires: DateTime.Now.AddMinutes(15), 
             signingCredentials: credentials
         );
 

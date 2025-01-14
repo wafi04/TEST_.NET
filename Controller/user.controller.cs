@@ -196,8 +196,9 @@ public class UsersController : ControllerBase
 
         return Ok(ApiResponse<UserDetailDto>.Ok(userDto, "User retrieved successfully"));
     }
+    
 
-    [HttpPost]
+    [HttpPost("register")]
     public async Task<ActionResult<ApiResponse<User>>> CreateUser(CreateUserRequest request)
     {
         try

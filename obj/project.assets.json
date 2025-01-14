@@ -831,11 +831,10 @@
           "buildTransitive/Mono.TextTemplating.targets": {}
         }
       },
-      "Npgsql/9.0.0": {
+      "Npgsql/9.0.2": {
         "type": "package",
         "dependencies": {
-          "Microsoft.Extensions.Logging.Abstractions": "8.0.2",
-          "System.Text.Json": "9.0.0"
+          "Microsoft.Extensions.Logging.Abstractions": "8.0.2"
         },
         "compile": {
           "lib/net8.0/Npgsql.dll": {
@@ -848,12 +847,12 @@
           }
         }
       },
-      "Npgsql.EntityFrameworkCore.PostgreSQL/9.0.0": {
+      "Npgsql.EntityFrameworkCore.PostgreSQL/9.0.2": {
         "type": "package",
         "dependencies": {
           "Microsoft.EntityFrameworkCore": "[9.0.0, 10.0.0)",
           "Microsoft.EntityFrameworkCore.Relational": "[9.0.0, 10.0.0)",
-          "Npgsql": "9.0.0"
+          "Npgsql": "9.0.2"
         },
         "compile": {
           "lib/net8.0/Npgsql.EntityFrameworkCore.PostgreSQL.dll": {
@@ -1114,7 +1113,7 @@
       "System.IO.Pipelines/9.0.0": {
         "type": "package",
         "compile": {
-          "lib/net8.0/System.IO.Pipelines.dll": {
+          "lib/net8.0/_._": {
             "related": ".xml"
           }
         },
@@ -1165,7 +1164,7 @@
       "System.Text.Encodings.Web/9.0.0": {
         "type": "package",
         "compile": {
-          "lib/net8.0/System.Text.Encodings.Web.dll": {
+          "lib/net8.0/_._": {
             "related": ".xml"
           }
         },
@@ -1191,7 +1190,7 @@
           "System.Text.Encodings.Web": "9.0.0"
         },
         "compile": {
-          "lib/net8.0/System.Text.Json.dll": {
+          "lib/net8.0/_._": {
             "related": ".xml"
           }
         },
@@ -3095,10 +3094,10 @@
         "readme.md"
       ]
     },
-    "Npgsql/9.0.0": {
-      "sha512": "zu1nCRt0gWP/GR0reYgg0Bl5o8qyNV7mVAgzAbVLRiAd1CYXcf/9nrubPH0mt93u8iGTKmYqWaLVECEAcE6IfQ==",
+    "Npgsql/9.0.2": {
+      "sha512": "hCbO8box7i/XXiTFqCJ3GoowyLqx3JXxyrbOJ6om7dr+eAknvBNhhUHeJVGAQo44sySZTfdVffp4BrtPeLZOAA==",
       "type": "package",
-      "path": "npgsql/9.0.0",
+      "path": "npgsql/9.0.2",
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
@@ -3107,22 +3106,22 @@
         "lib/net6.0/Npgsql.xml",
         "lib/net8.0/Npgsql.dll",
         "lib/net8.0/Npgsql.xml",
-        "npgsql.9.0.0.nupkg.sha512",
+        "npgsql.9.0.2.nupkg.sha512",
         "npgsql.nuspec",
         "postgresql.png"
       ]
     },
-    "Npgsql.EntityFrameworkCore.PostgreSQL/9.0.0": {
-      "sha512": "ObngKFRLMBAeMqQzK7SC0Q6WZtWw0imPmEkVPo12yLVF3fioz2TN+w0mhNMJ5cVd/sLB2u+jei0bmA9sDMtkMw==",
+    "Npgsql.EntityFrameworkCore.PostgreSQL/9.0.2": {
+      "sha512": "cYdOGplIvr9KgsG8nJ8xnzBTImeircbgetlzS1OmepS5dAQW6PuGpVrLOKBNEwEvGYZPsV8037X5vZ/Dmpwz7Q==",
       "type": "package",
-      "path": "npgsql.entityframeworkcore.postgresql/9.0.0",
+      "path": "npgsql.entityframeworkcore.postgresql/9.0.2",
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
         "README.md",
         "lib/net8.0/Npgsql.EntityFrameworkCore.PostgreSQL.dll",
         "lib/net8.0/Npgsql.EntityFrameworkCore.PostgreSQL.xml",
-        "npgsql.entityframeworkcore.postgresql.9.0.0.nupkg.sha512",
+        "npgsql.entityframeworkcore.postgresql.9.0.2.nupkg.sha512",
         "npgsql.entityframeworkcore.postgresql.nuspec",
         "postgresql.png"
       ]
@@ -3715,7 +3714,7 @@
       "Microsoft.EntityFrameworkCore >= 9.0.0",
       "Microsoft.EntityFrameworkCore.Design >= 9.0.0",
       "Microsoft.IdentityModel.Tokens >= 8.2.1",
-      "Npgsql.EntityFrameworkCore.PostgreSQL >= 9.0.0",
+      "Npgsql.EntityFrameworkCore.PostgreSQL >= 9.0.2",
       "Swashbuckle.AspNetCore >= 6.6.2",
       "System.IdentityModel.Tokens.Jwt >= 8.2.1"
     ]
@@ -3726,11 +3725,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "/home/wafiuddin/Documents/testing/CrudApi/CrudApi.csproj",
+      "projectUniqueName": "/home/wafiuddin/data/TEST_.NET/CrudApi.csproj",
       "projectName": "CrudApi",
-      "projectPath": "/home/wafiuddin/Documents/testing/CrudApi/CrudApi.csproj",
+      "projectPath": "/home/wafiuddin/data/TEST_.NET/CrudApi.csproj",
       "packagesPath": "/home/wafiuddin/.nuget/packages/",
-      "outputPath": "/home/wafiuddin/Documents/testing/CrudApi/obj/",
+      "outputPath": "/home/wafiuddin/data/TEST_.NET/obj/",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "/home/wafiuddin/.nuget/NuGet/NuGet.Config"
@@ -3751,6 +3750,11 @@
         "warnAsError": [
           "NU1605"
         ]
+      },
+      "restoreAuditProperties": {
+        "enableAudit": "true",
+        "auditLevel": "low",
+        "auditMode": "direct"
       }
     },
     "frameworks": {
@@ -3785,7 +3789,7 @@
           },
           "Npgsql.EntityFrameworkCore.PostgreSQL": {
             "target": "Package",
-            "version": "[9.0.0, )"
+            "version": "[9.0.2, )"
           },
           "Swashbuckle.AspNetCore": {
             "target": "Package",
@@ -3815,7 +3819,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "/usr/lib/dotnet/sdk/8.0.110/PortableRuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "/usr/share/dotnet/sdk/8.0.404/PortableRuntimeIdentifierGraph.json"
       }
     }
   }

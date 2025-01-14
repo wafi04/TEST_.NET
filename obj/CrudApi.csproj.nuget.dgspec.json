@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "/home/wafiuddin/Documents/testing/CrudApi/CrudApi.csproj": {}
+    "/home/wafiuddin/data/TEST_.NET/CrudApi.csproj": {}
   },
   "projects": {
-    "/home/wafiuddin/Documents/testing/CrudApi/CrudApi.csproj": {
+    "/home/wafiuddin/data/TEST_.NET/CrudApi.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/home/wafiuddin/Documents/testing/CrudApi/CrudApi.csproj",
+        "projectUniqueName": "/home/wafiuddin/data/TEST_.NET/CrudApi.csproj",
         "projectName": "CrudApi",
-        "projectPath": "/home/wafiuddin/Documents/testing/CrudApi/CrudApi.csproj",
+        "projectPath": "/home/wafiuddin/data/TEST_.NET/CrudApi.csproj",
         "packagesPath": "/home/wafiuddin/.nuget/packages/",
-        "outputPath": "/home/wafiuddin/Documents/testing/CrudApi/obj/",
+        "outputPath": "/home/wafiuddin/data/TEST_.NET/obj/",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "/home/wafiuddin/.nuget/NuGet/NuGet.Config"
@@ -32,6 +32,11 @@
           "warnAsError": [
             "NU1605"
           ]
+        },
+        "restoreAuditProperties": {
+          "enableAudit": "true",
+          "auditLevel": "low",
+          "auditMode": "direct"
         }
       },
       "frameworks": {
@@ -66,7 +71,7 @@
             },
             "Npgsql.EntityFrameworkCore.PostgreSQL": {
               "target": "Package",
-              "version": "[9.0.0, )"
+              "version": "[9.0.2, )"
             },
             "Swashbuckle.AspNetCore": {
               "target": "Package",
@@ -96,7 +101,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "/usr/lib/dotnet/sdk/8.0.110/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "/usr/share/dotnet/sdk/8.0.404/PortableRuntimeIdentifierGraph.json"
         }
       }
     }

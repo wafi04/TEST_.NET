@@ -3,11 +3,10 @@ using CrudApi.Data;
 using CrudApi.Services;
 using CrudApi.Middleware;
 using Microsoft.AspNetCore.Authentication.Cookies;
-using AutoMapper; // Tambahkan ini
-using CrudApi.Mappings; // Pastikan Anda memiliki namespace untuk Mapping Profile
 
 
 var builder = WebApplication.CreateBuilder(args);
+// AutoMapper untuk mapping antar objek/models
 builder.Services.AddAutoMapper(typeof(Program).Assembly);
 
 // Add services to the container
@@ -19,20 +18,19 @@ builder.Services.AddCors(options =>
     options.AddPolicy("AllowCredentials", builder =>
     {
         builder
-            .WithOrigins("http://127.0.0.1:5500") // Ganti dengan domain frontend Anda
+            .WithOrigins("http://127.0.0.1:5500") 
             .AllowAnyMethod()
             .AllowCredentials()
             .AllowAnyHeader();
     });
 });
 
-// Konfigurasi Cookie Authentication
 builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
     .AddCookie(options =>
     {
         options.Cookie.HttpOnly = true;
-        options.Cookie.SameSite = SameSiteMode.None; // Penting untuk Postman
-        options.Cookie.SecurePolicy = CookieSecurePolicy.None; // Set ke None untuk testing
+        options.Cookie.SameSite = SameSiteMode.None; 
+        options.Cookie.SecurePolicy = CookieSecurePolicy.None; 
     });
 
 // Konfigurasi DbContext
@@ -40,8 +38,10 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection"))
 );
 
-builder.Services.AddScoped<IUserService, UserService>();
+
+// Service layer registrations
 builder.Services.AddScoped<IAuthService, AuthService>();
+builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IKaryawanService, KaryawanService>();
 
 // Swagger/OpenAPI
@@ -58,7 +58,6 @@ if (app.Environment.IsDevelopment())
 }
 
 // Gunakan CORS sebelum routing
-// app.UseCors("AllowAll");
 app.UseCors("AllowCredentials");
 app.UseStaticFiles();
 app.MapGet("/dashboard", [Authorize] async (HttpContext context) => 
@@ -67,13 +66,13 @@ app.MapGet("/dashboard", [Authorize] async (HttpContext context) =>
 });
 app.MapGet("/login", [Authorize] async (HttpContext context) => 
 {
-    await context.Response.SendFileAsync("wwwroot/index.html");
+    await context.Response.SendFileAsync("wwwroot/login.html");
+});
+app.MapGet("/register", [Authorize] async (HttpContext context) => 
+{
+    await context.Response.SendFileAsync("wwwroot/register.html");
 });
 
-
-
-
-// Tambahkan Authentication middleware sebelum Authorization
 app.UseAuthentication();
 app.UseAuthorization();
 app.UseMiddleware<JwtMiddleware>();

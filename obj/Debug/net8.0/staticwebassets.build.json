@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "E1AdI6lfe4wr0Ke3U7o+pBvncyIiyZonwNbIdv74vpg=",
+  "Hash": "Ps3/OPLF3Ou7ZXxCTp9WMRwnZsi9q0ghKcEjopQjSxM=",
   "Source": "CrudApi",
   "BasePath": "_content/CrudApi",
   "Mode": "Default",
@@ -10,17 +10,17 @@
     {
       "Name": "CrudApi/wwwroot",
       "Source": "CrudApi",
-      "ContentRoot": "/home/wafiuddin/Documents/testing/CrudApi/wwwroot/",
+      "ContentRoot": "/home/wafiuddin/data/TEST_.NET/wwwroot/",
       "BasePath": "_content/CrudApi",
       "Pattern": "**"
     }
   ],
   "Assets": [
     {
-      "Identity": "/home/wafiuddin/Documents/testing/CrudApi/wwwroot/dashboard.html",
+      "Identity": "/home/wafiuddin/data/TEST_.NET/wwwroot/dashboard.html",
       "SourceId": "CrudApi",
       "SourceType": "Discovered",
-      "ContentRoot": "/home/wafiuddin/Documents/testing/CrudApi/wwwroot/",
+      "ContentRoot": "/home/wafiuddin/data/TEST_.NET/wwwroot/",
       "BasePath": "_content/CrudApi",
       "RelativePath": "dashboard.html",
       "AssetKind": "All",
@@ -36,10 +36,10 @@
       "OriginalItemSpec": "wwwroot/dashboard.html"
     },
     {
-      "Identity": "/home/wafiuddin/Documents/testing/CrudApi/wwwroot/index.html",
+      "Identity": "/home/wafiuddin/data/TEST_.NET/wwwroot/index.html",
       "SourceId": "CrudApi",
       "SourceType": "Discovered",
-      "ContentRoot": "/home/wafiuddin/Documents/testing/CrudApi/wwwroot/",
+      "ContentRoot": "/home/wafiuddin/data/TEST_.NET/wwwroot/",
       "BasePath": "_content/CrudApi",
       "RelativePath": "index.html",
       "AssetKind": "All",
@@ -53,6 +53,25 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot/index.html"
+    },
+    {
+      "Identity": "/home/wafiuddin/data/TEST_.NET/wwwroot/register.html",
+      "SourceId": "CrudApi",
+      "SourceType": "Discovered",
+      "ContentRoot": "/home/wafiuddin/data/TEST_.NET/wwwroot/",
+      "BasePath": "_content/CrudApi",
+      "RelativePath": "register.html",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "PreferTarget",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot/register.html"
     }
   ]
 }

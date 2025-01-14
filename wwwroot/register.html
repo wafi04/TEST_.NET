@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Register</title>
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css"
+      rel="stylesheet" />
+    <style>
+      body {
+        background: linear-gradient(120deg, #4e54c8, #8f94fb);
+        height: 100vh;
+      }
+      .card {
+        border: none;
+        border-radius: 15px;
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+      }
+      .form-control {
+        border-radius: 10px;
+        padding: 12px;
+      }
+      .btn-primary {
+        border-radius: 10px;
+        padding: 12px;
+        background: linear-gradient(120deg, #4e54c8, #8f94fb);
+        border: none;
+      }
+      .btn-primary:hover {
+        background: linear-gradient(120deg, #3a3f99, #7a7fd6);
+      }
+      .nav-pills .nav-link {
+        border-radius: 10px;
+        color: #4e54c8;
+      }
+      .nav-pills .nav-link.active {
+        background: linear-gradient(120deg, #4e54c8, #8f94fb);
+      }
+      .form-label {
+        color: #4e54c8;
+        font-weight: 500;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="row justify-content-center align-items-center min-vh-100">
+        <div class="col-md-6 col-lg-5">
+          <div class="card p-4">
+            <button
+              class="nav-link"
+              id="pills-register-tab"
+              data-bs-toggle="pill"
+              data-bs-target="#pills-register"
+              type="button">
+              Register
+            </button>
+
+            <form id="registerForm">
+              <div class="mb-3">
+                <label class="form-label">Nama Lengkap</label>
+                <input type="text" class="form-control" required />
+              </div>
+              <div class="mb-3">
+                <label class="form-label">Email</label>
+                <input type="email" class="form-control" required />
+              </div>
+              <div class="mb-3">
+                <label class="form-label">Password</label>
+                <input type="password" class="form-control" required />
+              </div>
+              <div class="mb-3">
+                <label class="form-label">Konfirmasi Password</label>
+                <input type="password" class="form-control" required />
+              </div>
+              <button type="submit" class="btn btn-primary w-100">
+                Register
+              </button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+    <script>
+      $(document).ready(function () {
+        const api = "/api/users/register";
+
+        // Validation functions
+        const validateName = (name) => {
+          if (!name) return "Nama harus diisi";
+          if (name.length > 100)
+            return "Nama tidak boleh lebih dari 100 karakter";
+          return "";
+        };
+
+        const validateEmail = (email) => {
+          if (!email) return "Email harus diisi";
+          if (email.length > 255)
+            return "Email tidak boleh lebih dari 255 karakter";
+          const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+          if (!emailRegex.test(email)) return "Format email tidak valid";
+          return "";
+        };
+
+        const validatePassword = (password) => {
+          if (!password) return "Password harus diisi";
+          if (password.length < 6) return "Password minimal 6 karakter";
+          return "";
+        };
+
+        // Register Form Submission
+        $("#registerForm").on("submit", function (e) {
+          e.preventDefault();
+
+          // Get form values
+          const name = $("#registerForm input[type='text']").val().trim();
+          const email = $("#registerForm input[type='email']").val().trim();
+          const password = $("#registerForm input[type='password']")
+            .eq(0)
+            .val();
+          const confirmPassword = $("#registerForm input[type='password']")
+            .eq(1)
+            .val();
+
+          // Validate all fields
+          const nameError = validateName(name);
+          const emailError = validateEmail(email);
+          const passwordError = validatePassword(password);
+
+          // Check for validation errors
+          if (nameError || emailError || passwordError) {
+            const errorMessage = [nameError, emailError, passwordError]
+              .filter((error) => error)
+              .join("\n");
+
+            $("#registerAlert")
+              .removeClass("d-none alert-success")
+              .addClass("alert-danger")
+              .html(errorMessage.replace(/\n/g, "<br>"));
+            return;
+          }
+
+          // Validate password confirmation
+          if (password !== confirmPassword) {
+            $("#registerAlert")
+              .removeClass("d-none alert-success")
+              .addClass("alert-danger")
+              .text("Password dan konfirmasi password tidak cocok!");
+            return;
+          }
+
+          // Show loading spinner
+          $("#registerSpinner").removeClass("d-none");
+          $("#registerButton").prop("disabled", true);
+          $("#registerAlert").addClass("d-none");
+
+          // Data to be sent to API
+          const data = {
+            name: name,
+            email: email,
+            password: password,
+          };
+
+          // Send request to API using jQuery Ajax
+          $.ajax({
+            url: api,
+            type: "POST",
+            xhrFields: {
+              withCredentials: true,
+            },
+            crossDomain: true,
+            contentType: "application/json",
+            data: JSON.stringify(data),
+            success: function (response) {
+              // Handle success based on response.success
+              if (response.success) {
+                $("#registerAlert")
+                  .removeClass("d-none alert-danger")
+                  .addClass("alert-success")
+                  .text(
+                    response.message || "Registrasi berhasil! Silahkan login."
+                  );
+
+                // Switch to login tab after successful registration
+                setTimeout(function () {
+                  $("#pills-login-tab").tab("show");
+                  $("#registerForm")[0].reset();
+                  $("#registerForm input").removeClass("is-valid"); // Reset validation states
+                }, 2000);
+              } else {
+                // Handle case where API returns success: false
+                $("#registerAlert")
+                  .removeClass("d-none alert-success")
+                  .addClass("alert-danger")
+                  .text(
+                    response.message || "Terjadi kesalahan saat registrasi"
+                  );
+              }
+            },
+            error: function (xhr, status, error) {
+              let errorMessage = "Terjadi kesalahan saat registrasi";
+
+              try {
+                const response = JSON.parse(xhr.responseText);
+                if (response.errors) {
+                  // Handle validation errors from API
+                  const errors = Array.isArray(response.errors)
+                    ? response.errors.join("<br>")
+                    : Object.values(response.errors).join("<br>");
+                  errorMessage = errors || response.message || errorMessage;
+                } else {
+                  errorMessage = response.message || errorMessage;
+                }
+              } catch (e) {
+                console.error("Error parsing error response:", e);
+              }
+
+              $("#registerAlert")
+                .removeClass("d-none alert-success")
+                .addClass("alert-danger")
+                .html(errorMessage); // Using .html() to support line breaks
+            },
+            complete: function () {
+              // Hide loading spinner
+              $("#registerSpinner").addClass("d-none");
+              $("#registerButton").prop("disabled", false);
+            },
+          });
+        });
+
+        // Real-time validation remains the same
+        $("#registerForm input").on("input", function () {
+          const $input = $(this);
+          const value = $input.val().trim();
+          let error = "";
+
+          // Determine which validation to run
+          if ($input.attr("type") === "text") {
+            error = validateName(value);
+          } else if ($input.attr("type") === "email") {
+            error = validateEmail(value);
+          } else if ($input.attr("type") === "password") {
+            if ($input.is(":first-of-type")) {
+              error = validatePassword(value);
+            } else {
+              const password = $('#registerForm input[type="password"]')
+                .eq(0)
+                .val();
+              if (value !== password) {
+                error = "Password tidak cocok";
+              }
+            }
+          }
+
+          if (error) {
+            $input.addClass("is-invalid");
+            $input.removeClass("is-valid");
+            $input.siblings(".invalid-feedback").remove();
+            $input.after(`<div class="invalid-feedback">${error}</div>`);
+          } else {
+            $input.removeClass("is-invalid");
+            $input.addClass("is-valid");
+            $input.siblings(".invalid-feedback").remove();
+          }
+        });
+
+        $("#registerForm input").on("input", function () {
+          $("#registerAlert").addClass("d-none");
+        });
+      });
+    </script>
+  </body>
+</html>
